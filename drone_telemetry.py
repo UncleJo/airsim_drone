@@ -20,6 +20,13 @@ class drone_data:
     imu_lax = []
     imu_lay = []
     imu_laz = []
+    lidar_ts = []
+    lidar_ox = []
+    lidar_oy = []
+    lidar_oz = []
+    lidar_px = []
+    lidar_py = []
+    lidar_pz = []
     line_done = 0
 
     def __init__(self):
@@ -47,3 +54,14 @@ class drone_data:
         self.imu_lax.append(float(data1.linear_acceleration.x_val))
         self.imu_lay.append(float(data1.linear_acceleration.y_val))
         self.imu_laz.append(float(data1.linear_acceleration.z_val) * -1)
+
+    def get_lidar_data(self):
+        data2 = self.client.getLidarData()
+        self.lidar_ts.append(float(data2.time_stamp) / 1000000000)
+        self.lidar_ox.append(float(data2.pose.orientation.x_val))
+        self.lidar_oy.append(float(data2.pose.orientation.y_val))
+        self.lidar_oz.append(float(data2.pose.orientation.z_val))
+        self.lidar_px.append(float(data2.pose.position.x_val))
+        self.lidar_py.append(float(data2.pose.position.y_val))
+        self.lidar_pz.append(float(data2.pose.position.z_val) * -1)
+
